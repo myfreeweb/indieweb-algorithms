@@ -1,10 +1,31 @@
 # indieweb-algorithms [![Hackage](https://img.shields.io/hackage/v/indieweb-algorithms.svg?style=flat)](https://hackage.haskell.org/package/indieweb-algorithms) [![Build Status](https://img.shields.io/travis/myfreeweb/indieweb-algorithms.svg?style=flat)](https://travis-ci.org/myfreeweb/indieweb-algorithms) [![unlicense](https://img.shields.io/badge/un-license-green.svg?style=flat)](http://unlicense.org)
 
-TODO
+A collection of implementations of [IndieWeb]- and [Microformats 2]-related algorithms (based on [microformats2-parser] and [http-link-header]):
+
+- finding all microformats of a given type (while retaining the path to them), ie. flattening the tree
+- discovering **[authorship](http://indiewebcamp.com/authorship)** of an `h-entry`
+- discovering [Webmention](http://indiewebcamp.com/Webmention)/[Micropub](http://indiewebcamp.com/Micropub)/[IndieAuth](http://indiewebcamp.com/IndieAuth)/etc. **endpoints** (HTTP `Link` header, `a` and `link` tags with the `rel` attribute)
+
+[#IndieWeb]: http://indiewebcamp.com
+[Microformats 2]: http://microformats.org/wiki/microformats2
+[microformats2-parser]: https://github.com/myfreeweb/microformats2-parser
+[http-link-header]: https://github.com/myfreeweb/http-link-header
 
 ## Usage
 
-TODO
+### Endpoints
+
+```haskell
+{-# LANGUAGE OverloadedStrings #-}
+
+import Network.HTTP.Link
+import Data.Default
+import Data.Maybe
+import Data.Microformats2.Parser
+import Data.IndieWeb.Endpoints
+
+discoverEndpoints [ "micropub" ] (parseMf2 def $ documentRoot $ parseLBS "<link rel=micropub href='http://example.com/micropub2'>...") (fromMaybe [] $ parseLinkHeader "<http://example.com/micropub>; rel=\"micropub\"")
+```
 
 ## Development
 
