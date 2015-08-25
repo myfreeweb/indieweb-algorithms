@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-orphans #-}
 {-# LANGUAGE QuasiQuotes, OverloadedStrings, UnicodeSyntax #-}
 
 module Data.IndieWeb.AuthorshipSpec (spec) where
@@ -10,14 +9,10 @@ import           Network.URI
 import qualified Data.ByteString.Lazy as LB
 import           Data.Functor.Identity
 import           Data.Maybe
-import           Data.String
 import           Data.Aeson
 import           Data.Microformats2.Parser
 import           Data.IndieWeb.Authorship
 import           Data.IndieWeb.MicroformatsUtil
-
-instance IsString URI where
-    fromString = fromJust . parseURI
 
 spec ∷ Spec
 spec = do

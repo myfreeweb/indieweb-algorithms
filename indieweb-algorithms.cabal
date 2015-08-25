@@ -41,6 +41,7 @@ library
     default-language: Haskell2010
     exposed-modules:
         Data.IndieWeb.Authorship
+        Data.IndieWeb.Endpoints
         Data.IndieWeb.MicroformatsUtil
     ghc-options: -Wall
     hs-source-dirs: library
@@ -69,5 +70,6 @@ test-suite tests
     other-modules:
         TestCommon
         Data.IndieWeb.AuthorshipSpec
+        Data.IndieWeb.EndpointsSpec
         Data.IndieWeb.MicroformatsUtilSpec
     type: exitcode-stdio-1.0
