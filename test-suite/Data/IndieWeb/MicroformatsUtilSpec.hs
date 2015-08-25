@@ -5,9 +5,6 @@ module Data.IndieWeb.MicroformatsUtilSpec (spec) where
 import           Test.Hspec hiding (shouldBe)
 import           Test.Hspec.Expectations.Pretty (shouldBe)
 import           TestCommon
-import           Data.Maybe
-import           Data.Aeson hiding (json)
-import           Data.Default
 import           Data.Microformats2.Parser
 import           Data.IndieWeb.MicroformatsUtil
 
