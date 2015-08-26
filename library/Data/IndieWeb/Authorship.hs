@@ -45,6 +45,8 @@ entryAuthors mfSettings fetch entryUri mfRoot (entry, parents) = runMaybeT $ asu
         isMf t = (String t `V.elem`) . (fromMaybe V.empty) . (^? key "type" . _Array)
         cardFromUri uri = do
           -- TODO: only allow http(s)
-          html ← fetch $ uri `relativeTo` entryUri
+          let uri' = uri `relativeTo` entryUri
+          html ← fetch uri'
+          let mfSettings' = mfSettings { baseUri = Just uri' }
           -- TODO: representative h-card, not just first
-          return $ fmap fst $ headMay =<< allMicroformatsOfType "h-card" =<< parseMf2 mfSettings <$> documentRoot <$> parseLBS <$> html
+          return $ fmap fst $ headMay =<< allMicroformatsOfType "h-card" =<< parseMf2 mfSettings' <$> documentRoot <$> parseLBS <$> html
