@@ -6,7 +6,7 @@ A collection of implementations of [IndieWeb]- and [Microformats 2]-related algo
 - discovering **[authorship](http://indiewebcamp.com/authorship)** of an `h-entry`
 - discovering [Webmention](http://indiewebcamp.com/Webmention)/[Micropub](http://indiewebcamp.com/Micropub)/[IndieAuth](http://indiewebcamp.com/IndieAuth)/etc. **endpoints** (HTTP `Link` header, `a` and `link` tags with the `rel` attribute)
 
-[#IndieWeb]: http://indiewebcamp.com
+[IndieWeb]: http://indiewebcamp.com
 [Microformats 2]: http://microformats.org/wiki/microformats2
 [microformats2-parser]: https://github.com/myfreeweb/microformats2-parser
 [http-link-header]: https://github.com/myfreeweb/http-link-header
