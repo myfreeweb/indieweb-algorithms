@@ -64,6 +64,7 @@ test-suite tests
       , raw-strings-qq
       , aeson-qq
       , data-default
+      , http-link-header
     default-language: Haskell2010
     ghc-options: -threaded -Wall -fhpc
     hs-source-dirs: test-suite
