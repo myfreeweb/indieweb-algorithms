@@ -1,7 +1,10 @@
-{-# LANGUAGE QuasiQuotes, OverloadedStrings, UnicodeSyntax #-}
+{-# LANGUAGE QuasiQuotes, OverloadedStrings, UnicodeSyntax, CPP #-}
 
 module Data.IndieWeb.AuthorshipSpec (spec) where
 
+#if __GLASGOW_HASKELL__ < 709
+import           Control.Applicative
+#endif
 import           Test.Hspec hiding (shouldBe)
 import           Test.Hspec.Expectations.Pretty (shouldBe)
 import           TestCommon

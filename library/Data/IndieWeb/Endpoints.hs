@@ -1,7 +1,10 @@
-{-# LANGUAGE OverloadedStrings, UnicodeSyntax #-}
+{-# LANGUAGE OverloadedStrings, UnicodeSyntax, CPP #-}
 
 module Data.IndieWeb.Endpoints where
 
+#if __GLASGOW_HASKELL__ < 709
+import           Control.Applicative
+#endif
 import           Control.Lens
 import           Data.Maybe (catMaybes)
 import           Data.List (nub)
