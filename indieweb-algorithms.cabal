@@ -35,6 +35,7 @@ library
       , lens
       , aeson
       , lens-aeson
+      , xml-conduit
       , data-default
       , network-uri
       , microformats2-parser

@@ -9,7 +9,6 @@ import           Control.Monad
 import           Control.Monad.Trans.Maybe
 import           Control.Lens
 import qualified Data.Text as T
-import qualified Data.ByteString.Lazy as LB
 import qualified Data.Vector as V
 import           Data.Foldable (asum)
 import           Data.Maybe
@@ -17,12 +16,13 @@ import           Data.Aeson
 import           Data.Aeson.Lens
 import           Data.Microformats2.Parser
 import           Data.IndieWeb.MicroformatsUtil
+import           Text.XML (Document)
 import           Network.URI
 import           Safe (headMay)
 
 -- | Finds the authors of an h-entry, discovering its authorship <http://indiewebcamp.com/authorship> using the HTTP fetcher function from arguments.
 entryAuthors ∷ Monad μ ⇒ Mf2ParserSettings
-                       → (URI → μ (Maybe LB.ByteString)) -- ^ the URI fetcher function
+                       → (URI → μ (Maybe Document)) -- ^ the URI fetcher function
                        → URI -- ^ the URI of the page the entry was extracted from
                        → Value -- ^ the full Microformats 2 parse of the page as extracted by 'Data.Microformats2.Parser.parseMf2'
                        → (Value, [Value]) -- ^ (the h-entry, [parent microformats]) as extracted by 'Data.IndieWeb.MicroformatsUtil.allMicroformatsOfType'
@@ -49,4 +49,4 @@ entryAuthors mfSettings fetch entryUri mfRoot (entry, parents) = runMaybeT $ asu
           html ← fetch uri'
           let mfSettings' = mfSettings { baseUri = Just uri' }
           -- TODO: representative h-card, not just first
-          return $ fmap fst $ headMay =<< allMicroformatsOfType "h-card" =<< parseMf2 mfSettings' <$> documentRoot <$> parseLBS <$> html
+          return $ fmap fst $ headMay =<< allMicroformatsOfType "h-card" =<< parseMf2 mfSettings' <$> documentRoot <$> html

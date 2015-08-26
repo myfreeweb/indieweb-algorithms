@@ -28,7 +28,7 @@ spec = do
         mockFetch "http://author/page" = return $ Just [xml|<body><div class="h-card"><h1 class="p-name">Author from Page!|]
         mockFetch _ = return Nothing
         rE u = let mf = parseMf2 def . documentRoot . parseLBS . fromMaybe "" . runIdentity $ mockFetch u in
-                   runIdentity . entryAuthors def mockFetch u mf . head . fromJust $ allMicroformatsOfType "h-entry" mf
+                   runIdentity . entryAuthors def (\x → mockFetch x >>= \y → return $ parseLBS <$> y) u mf . head . fromJust $ allMicroformatsOfType "h-entry" mf
         card n = o [ "value" .= String n
                    , "type" .= [ String "h-card" ]
                    , "properties" .= o [ "name" .= [ String n ] ] ]
