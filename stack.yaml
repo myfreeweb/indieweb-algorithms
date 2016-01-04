@@ -1,8 +1,8 @@
 flags: {}
 packages:
   - '.'
-resolver: lts-3.10
+resolver: lts-3.20
 extra-deps:
-  - hspec-expectations-pretty-diff-0.7.2.2
-  - microformats2-parser-1.0.1.2
+  - hspec-expectations-pretty-diff-0.7.2.3
+  - microformats2-parser-1.0.1.3
   - http-link-header-1.0.1
