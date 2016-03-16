@@ -36,9 +36,9 @@ Use ghci to run tests quickly with `:test` (see the `.ghci` file).
 ```bash
 $ stack build
 
-$ stack test && rm tests.tix
+$ stack test
 
-$ stack ghci --ghc-options="-fno-hpc"
+$ stack ghci
 ```
 
 [stack]: https://github.com/commercialhaskell/stack
@@ -46,9 +46,8 @@ $ stack ghci --ghc-options="-fno-hpc"
 ## Contributing
 
 Please feel free to submit pull requests!
-Bugfixes and simple non-breaking improvements will be accepted without any questions :-)
 
-By participating in this project you agree to follow the [Contributor Code of Conduct](http://contributor-covenant.org/version/1/2/0/).
+By participating in this project you agree to follow the [Contributor Code of Conduct](http://contributor-covenant.org/version/1/4/).
 
 [The list of contributors is available on GitHub](https://github.com/myfreeweb/indieweb-algorithms/graphs/contributors).
 
