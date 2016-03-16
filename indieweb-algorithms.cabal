@@ -36,6 +36,7 @@ library
       , aeson
       , lens-aeson
       , xml-conduit
+      , xml-lens
       , data-default
       , network-uri
       , microformats2-parser
@@ -45,6 +46,7 @@ library
         Data.IndieWeb.Authorship
         Data.IndieWeb.Endpoints
         Data.IndieWeb.MicroformatsUtil
+        Data.IndieWeb.SiloToMicroformats
     ghc-options: -Wall
     hs-source-dirs: library
 
@@ -67,7 +69,7 @@ test-suite tests
       , data-default
       , http-link-header
     default-language: Haskell2010
-    ghc-options: -threaded -Wall -fhpc
+    ghc-options: -threaded -Wall
     hs-source-dirs: test-suite
     main-is: Spec.hs
     other-modules:
