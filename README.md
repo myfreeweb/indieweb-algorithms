@@ -6,6 +6,8 @@ A collection of implementations of [IndieWeb]- and [Microformats 2]-related algo
 - discovering **[authorship](http://indiewebcamp.com/authorship)** of an `h-entry`
 - discovering [Webmention](http://indiewebcamp.com/Webmention)/[Micropub](http://indiewebcamp.com/Micropub)/[IndieAuth](http://indiewebcamp.com/IndieAuth)/etc. **endpoints** (HTTP `Link` header, `a` and `link` tags with the `rel` attribute)
 - parsing tweets on Twitter.com into microformats (like [php-mf2-shim](https://github.com/indieweb/php-mf2-shim))
+- detecting [post types](https://indiewebcamp.com/posts#Kinds_of_Posts)
+- converting microformats to Atom feeds
 
 [IndieWeb]: https://indiewebcamp.com
 [Microformats 2]: http://microformats.org/wiki/microformats2

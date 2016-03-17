@@ -25,3 +25,25 @@ allMicroformatsOfType typeName mf = do
            then (v, path) : acc'
            else acc'
   Just $ concatMap (findOfType [] []) items
+
+-- | Tests whether a given Value is of a given microformat type (e.g. h-entry, h-feed).
+isMf ∷ T.Text → Value → Bool
+isMf t = (String t `V.elem`) . (fromMaybe V.empty) . (^? key "type" . _Array)
+
+data EntryType = Reply | Repost | Like | Bookmark | RSVP | Checkin | Event | Audio | Photo | Article | Note
+  deriving (Show, Eq)
+
+-- | Detects a post type (https://indiewebcamp.com/posts#Kinds_of_Posts)
+detectEntryType ∷ Value → EntryType
+detectEntryType entry
+  | isJust (entry ^? key "properties" . key "in-reply-to" . nth 0) = Reply
+  | isJust (entry ^? key "properties" . key "repost-of" . nth 0) = Repost
+  | isJust (entry ^? key "properties" . key "like-of" . nth 0) = Like
+  | isJust (entry ^? key "properties" . key "bookmark-of" . nth 0) = Bookmark
+  | isJust (entry ^? key "properties" . key "rsvp" . nth 0) = RSVP
+  | isJust (entry ^? key "properties" . key "location" . nth 0) = Checkin
+  | isJust (entry ^? key "properties" . key "event" . nth 0) = Event
+  | isJust (entry ^? key "properties" . key "audio" . nth 0) = Audio
+  | isJust (entry ^? key "properties" . key "photo" . nth 0) = Photo
+  | isJust (entry ^? key "properties" . key "name" . nth 0) && (entry ^? key "properties" . key "name" . nth 0) /= (entry ^? key "properties" . key "content" . nth 0 . key "value") = Article
+  | otherwise = Note

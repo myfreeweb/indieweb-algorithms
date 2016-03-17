@@ -42,7 +42,6 @@ entryAuthors mfSettings fetch entryUri mfRoot (entry, parents) = runMaybeT $ asu
         entryAuthor = getAuthorProp entry
         feedAuthor = getAuthorProp =<< (headMay $ filter (isMf "h-feed") parents)
         getAuthorProp = (V.toList <$>) . (^? key "properties" . key "author" . _Array)
-        isMf t = (String t `V.elem`) . (fromMaybe V.empty) . (^? key "type" . _Array)
         cardFromUri uri = do
           -- TODO: only allow http(s)
           let uri' = uri `relativeTo` entryUri
