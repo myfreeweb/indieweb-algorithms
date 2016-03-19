@@ -30,17 +30,17 @@ allMicroformatsOfType typeName mf = do
 isMf ∷ T.Text → Value → Bool
 isMf t = (String t `V.elem`) . (fromMaybe V.empty) . (^? key "type" . _Array)
 
-data EntryType = Reply | Repost | Like | Bookmark | RSVP | Checkin | Event | Audio | Photo | Article | Note
+data EntryType = Repost | Like | Bookmark | RSVP | Reply | Checkin | Event | Audio | Photo | Article | Note
   deriving (Show, Eq)
 
 -- | Detects a post type (https://indiewebcamp.com/posts#Kinds_of_Posts)
 detectEntryType ∷ Value → EntryType
 detectEntryType entry
-  | isJust (entry ^? key "properties" . key "in-reply-to" . nth 0) = Reply
   | isJust (entry ^? key "properties" . key "repost-of" . nth 0) = Repost
   | isJust (entry ^? key "properties" . key "like-of" . nth 0) = Like
   | isJust (entry ^? key "properties" . key "bookmark-of" . nth 0) = Bookmark
   | isJust (entry ^? key "properties" . key "rsvp" . nth 0) = RSVP
+  | isJust (entry ^? key "properties" . key "in-reply-to" . nth 0) = Reply
   | isJust (entry ^? key "properties" . key "location" . nth 0) = Checkin
   | isJust (entry ^? key "properties" . key "event" . nth 0) = Event
   | isJust (entry ^? key "properties" . key "audio" . nth 0) = Audio

@@ -13,6 +13,7 @@ import           Control.Applicative
 import           Data.Microformats2.Parser.HtmlUtil
 import           Data.Microformats2.Parser.Property (getImgSrc)
 import           Data.Microformats2.Parser (extractProperty, Mf2ParserSettings)
+import           Debug.Trace
 
 -- | Parses a twitter.com tweet into an h-entry value.
 parseTwitter ∷ Mf2ParserSettings → Element → Maybe Value
@@ -29,11 +30,11 @@ parseTwitter s r = if isJust tweet && isJust username && isJust tweetText
                        , "author" .= [ author ]
                        , "comment" .= comments ]
         author = object [ "type" .= [ String "h-card" ]
-                        , "properties" .= object [ "uid" .= [ profileUrl username ]
-                                                 , "url" .= [ profileUrl username ]
-                                                 , "name" .= [ str fullname ]
-                                                 , "nickname" .= [ str username ]
-                                                 , "photo" .= [ str avatar ] ] ]
+                        , "properties" .= object ([ "uid" .= [ profileUrl username ]
+                                                  , "url" .= [ profileUrl username ]
+                                                  , "name" .= [ str fullname ]
+                                                  , "nickname" .= [ str username ]
+                                                  , "photo" .= [ str avatar ] ] ++ pronouns) ]
         comments = mapMaybe (parseTwitter s) $ r ^.. hasClass "permalink-replies" ./ hasClass "tweet"
         profileUrl (Just x) = String $ "https://twitter.com/" <> T.dropWhile (== '@') x
         profileUrl _ = Null
@@ -43,6 +44,11 @@ parseTwitter s r = if isJust tweet && isJust username && isJust tweetText
         username = tweet >>= (^? hasClass "username") >>= getInnerTextRaw
         avatar = tweet >>= (^? hasClass "avatar") >>= getImgSrc
         permalink = tweet >>= (^? hasClass "tweet-timestamp") >>= return . extractProperty s "u"
+        pronouns = parsePronouns [] $ fromMaybe [] $ T.splitOn "/" <$> r ^? hasClass "ProfileSidebar" . entire . el "a" . attributeSatisfies "title" ("pronoun.is/" `T.isInfixOf`) . attr "title"
+        parsePronouns result (w : ww : "pronoun.is" : n : o : _ : p : _) = parsePronouns (("x-pronoun-posessive" .= [ String p ]) : result) (w : ww : "pronoun.is" : n : o : [])
+        parsePronouns result (w : ww : "pronoun.is" : n : o : _) = parsePronouns (("x-pronoun-oblique" .= [ String o ]) : result) (w : ww : "pronoun.is" : n : [])
+        parsePronouns result (_ : _ : "pronoun.is" : n : _) = ("x-pronoun-nominative" .= [ String n ]) : result
+        parsePronouns result _ = result
         tweet = r ^? hasClass "permalink-tweet" <|> r ^? hasClass "tweet"
         hasClass c = entire . attributeSatisfies "class" (c `T.isInfixOf`)
         str (Just x) = String x
