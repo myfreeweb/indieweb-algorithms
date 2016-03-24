@@ -1,6 +1,6 @@
 flags: {}
 packages:
   - '.'
-  - location: '../microformats2-parser'
-    extra-dep: true
-resolver: lts-5.6
+resolver: lts-5.9
+extra-deps:
+  - microformats2-parser-1.0.1.5
