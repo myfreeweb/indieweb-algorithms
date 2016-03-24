@@ -29,6 +29,7 @@ library
       , time
       , either
       , safe
+      , errors
       , containers
       , unordered-containers
       , vector
