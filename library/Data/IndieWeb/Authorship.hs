@@ -10,7 +10,7 @@ import           Control.Monad.Trans.Maybe
 import           Control.Lens
 import qualified Data.Text as T
 import qualified Data.Vector as V
-import           Data.Foldable (asum)
+import           Data.Foldable (asum, find)
 import           Data.Maybe
 import           Data.Aeson
 import           Data.Aeson.Lens
@@ -47,5 +47,13 @@ entryAuthors mfSettings fetch entryUri mfRoot (entry, parents) = runMaybeT $ asu
           let uri' = uri `relativeTo` entryUri
           html ← fetch uri'
           let mfSettings' = mfSettings { baseUri = Just uri' }
-          -- TODO: representative h-card, not just first
-          return $ fmap fst $ headMay =<< allMicroformatsOfType "h-card" =<< parseMf2 mfSettings' <$> documentRoot <$> html
+          return $ representativeCard uri' =<< parseMf2 mfSettings' <$> documentRoot <$> html
+
+representativeCard ∷ URI → Value → Maybe Value
+representativeCard uri mfRoot = asum [ matchingUidUrl, matchingRelMeUrl, matchingOnlyUrl ]
+  where matchingUidUrl = find (\c → any (== uri) (uris "url" c) && any (== uri) (uris "uid" c)) cards
+        matchingRelMeUrl = find (any (`elem` relMeUris) . uris "url") cards
+        matchingOnlyUrl = if length cards /= 1 then Nothing else find (any (== uri) . uris "url") cards
+        relMeUris = mapMaybe (parseURI . T.unpack) $ mfRoot ^.. key "rels" . key "me" . values . _String
+        uris k c  = mapMaybe (parseURI . T.unpack) $ c ^.. key "properties" . key k . values . _String
+        cards = fmap fst $ fromMaybe [] $ allMicroformatsOfType "h-card" mfRoot

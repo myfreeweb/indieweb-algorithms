@@ -63,7 +63,9 @@ test-suite tests
       , network-uri
       , hspec
       , hspec-expectations-pretty-diff
+      , lens
       , aeson
+      , lens-aeson
       , xml-conduit
       , template-haskell
       , indieweb-algorithms

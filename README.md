@@ -4,6 +4,7 @@ A collection of implementations of [IndieWeb]- and [Microformats 2]-related algo
 
 - finding all microformats of a given type (while retaining the path to them), ie. flattening the tree
 - discovering **[authorship](http://indiewebcamp.com/authorship)** of an `h-entry`
+  - discovering the [representative h-card](http://microformats.org/wiki/representative-h-card-parsing)
 - discovering [Webmention](http://indiewebcamp.com/Webmention)/[Micropub](http://indiewebcamp.com/Micropub)/[IndieAuth](http://indiewebcamp.com/IndieAuth)/etc. **endpoints** (HTTP `Link` header, `a` and `link` tags with the `rel` attribute)
 - parsing tweets on Twitter.com into microformats (like [php-mf2-shim](https://github.com/indieweb/php-mf2-shim))
 - detecting [post types](https://indiewebcamp.com/posts#Kinds_of_Posts)
