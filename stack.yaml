@@ -1,6 +1,6 @@
 flags: {}
 packages:
   - '.'
-resolver: lts-7.0
+resolver: lts-7.14
 extra-deps:
   - microformats2-parser-1.0.1.6
