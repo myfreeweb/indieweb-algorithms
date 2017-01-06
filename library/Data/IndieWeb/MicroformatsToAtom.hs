@@ -55,7 +55,7 @@ feedToAtom metaXml mfRoot =
 
     let entries = fromMaybe [] $ allMicroformatsOfType "h-entry" mfRoot
     forM_ entries $ \(entry, path) →
-      when (null path) $ el "entry" $ atomForEntry entry
+      el "entry" $ atomForEntry entry
 
 
 atomForCard ∷ Value → XML
