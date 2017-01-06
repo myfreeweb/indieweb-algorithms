@@ -4,6 +4,9 @@ module Data.IndieWeb.MicroformatsToAtom (
   feedToAtom
 , atomForEntry
 , asForEntry
+, el
+, elA
+, atom
 , empty
 ) where
 
